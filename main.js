@@ -9,7 +9,7 @@ state.items.forEach(item => {
             <div class="card-body">
             <h5 class="card-title">${item.title}</h5>
             <h6 class="card-subtitle mb-2 text-muted">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
-            <p class="card-text">${item.description}</p>
+            <p class="card-text ellipsed-text">${item.description}</p>
             <a href="#" class="card-link">Details</a>
             <a href="#" class="card-link">Edit</a>
             <a href="#" class="card-link">Done</a>

@@ -1,0 +1,7 @@
+.ellipsed-text {
+  overflow: hidden;
+  height: 75px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical
+}
