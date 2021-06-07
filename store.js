@@ -1,4 +1,4 @@
-import Todo from './todo.js'
+// import Todo from './todo.js'
 const state = {
     items: [
         new Todo('Todo title 1', '1Some quick example text to build on the card title and make up the bulk of the card\'s content. Some quick example text to build on the card title and make up the bulk of the card\'s content.', new Date('2021-06-12')),
@@ -8,4 +8,4 @@ const state = {
         new Todo('Todo title 5', '5Some quick example text to build on the card title and make up the bulk of the card\'s content.', new Date('2021-06-20'))
     ]
 }
-export { state }
+// export { state }

@@ -13,7 +13,7 @@
 <body>
 
 
-    <div id="Modal" class="modal" tabindex="-1">
+    <div id="details-modal" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -37,19 +37,9 @@
     </div>
 
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="./main.js"></script>
-    <script>
-        function modal(text) {
-            var myModal = new bootstrap.Modal(document.getElementById('Modal'), {
-            })
-
-            const modalText = document.querySelector('#Modal > .modal-dialog > .modal-content > .modal-body')
-            modalText.innerHTML = text
-
-            myModal.show()
-        }
-    </script>
-
+    <script src="./todo.js"></script>
+    <script src="./store.js"></script>
+    <script src="./main.js"></script>
 </body>
 
 </html>
