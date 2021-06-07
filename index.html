@@ -7,12 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO List</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-
-
     <div id="details-modal" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -30,10 +29,41 @@
         </div>
     </div>
 
+    <div id="saveModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавление задачи</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                          <label for="title" class="form-label">Заголовок задачи</label>
+                          <input type="text" class="form-control" id="title">
+                        </div>
+                        <div class="mb-3">
+                          <label for="description" class="form-label">Описание</label>
+                          <textarea class="form-control" id="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button id="saveModal__save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h1>TODO List</h1>
     <div id="items" class="container">
         <div class="row">
         </div>
+    </div>
+
+    <div id="fab" class="fab" data-bs-toggle="modal" data-bs-target="#saveModal">
+        <i class="bi-plus"></i>
     </div>
 
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

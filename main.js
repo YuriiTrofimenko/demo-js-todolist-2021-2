@@ -5,8 +5,16 @@
     console.log('load')
 }) */
 
+const saveModalSave = document.getElementById('saveModal__save')
+saveModalSave.addEventListener('click', (ev) => {
+    const saveModalFormTitle = document.querySelector('#saveModal form #title')
+    const saveModalFormDescription = document.querySelector('#saveModal form #description')
+    state.items.unshift(new Todo(saveModalFormTitle.value, saveModalFormDescription.value, new Date()))
+    fillItems()
+})
+
 const detailsModal = function (id) {
-    console.log('id = ', id)
+    // console.log('id = ', id)
     const item = state.items.find(i => i.id === id)
     if (item) {
         const modalText = document.querySelector('#details-modal > .modal-dialog > .modal-content > .modal-body')
