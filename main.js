@@ -1,6 +1,10 @@
 // console.log('Hello')
 import { state } from './store.js'
 // console.log(state)
+
+
+
+
 let cardsHtml = ''
 state.items.forEach(item => {
     cardsHtml += `
@@ -10,14 +14,24 @@ state.items.forEach(item => {
             <h5 class="card-title">${item.title}</h5>
             <h6 class="card-subtitle mb-2 text-muted">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
             <p class="card-text ellipsed-text">${item.description}</p>
-            <a href="#" class="card-link">Details</a>
-            <a href="#" class="card-link">Edit</a>
-            <a href="#" class="card-link">Done</a>
-            <a href="#" class="card-link">Delete</a>
+            <button onclick="modal('${item.description}')" class="card-link">Details</button>
+            <button class="card-link">Edit</button>
+            <button class="card-link">Done</button>
+            <button class="card-link">Delete</button>
             </div>
         </div>
     </div>
     `.trim()
+
 })
 const itemsRow = document.querySelector('#items > .row')
 itemsRow.innerHTML = cardsHtml
+
+
+
+
+
+
+
+
+
