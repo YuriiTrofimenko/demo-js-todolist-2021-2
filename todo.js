@@ -1,4 +1,4 @@
-/* export default */ class Todo {
+export default class Todo {
     static lastId = 0
     constructor (title, description, date, done, id) {
         if (id) {
