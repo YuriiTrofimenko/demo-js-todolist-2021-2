@@ -1,16 +1,34 @@
-// console.log('Hello')
+import Todo from './todo.js'
 import { state } from './store.js'
 
-/* document.addEventListener('load', () => {
-    console.log('load')
-}) */
-
+const addItemFab = document.getElementById('fab')
+const $saveModal =
+  new bootstrap.Modal(document.getElementById('saveModal'), {})
+const saveModalForm = document.querySelector('#saveModal form')
+const formSubmitEvent = new Event('submit', {'cancelable': true})
 const saveModalSave = document.getElementById('saveModal__save')
+
+addItemFab.addEventListener('click', (ev) => {
+  saveModalForm.classList.remove('was-validated')
+})
+
 saveModalSave.addEventListener('click', (ev) => {
+  saveModalForm.dispatchEvent(formSubmitEvent)
+})
+
+saveModalForm.addEventListener('submit', (ev) => {
+  ev.preventDefault()
+  if (saveModalForm.checkValidity()) {
     const saveModalFormTitle = document.querySelector('#saveModal form #title')
     const saveModalFormDescription = document.querySelector('#saveModal form #description')
     state.items.unshift(new Todo(saveModalFormTitle.value, saveModalFormDescription.value, new Date()))
+    saveModalForm.classList.remove('was-validated')
+    saveModalForm.reset()
+    $saveModal.hide()
     fillItems()
+  } else {
+    saveModalForm.classList.add('was-validated')
+  }
 })
 
 const detailsModal = function (id) {

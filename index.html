@@ -37,20 +37,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form novalidate>
                         <div class="mb-3">
                           <label for="title" class="form-label">Заголовок задачи</label>
-                          <input type="text" class="form-control" id="title">
+                          <input type="text" class="form-control" id="title" required pattern=".{1,50}">
+                          <div class="invalid-feedback">
+                            Введите заголовок задачи (не более 50 символов)
+                          </div>
                         </div>
                         <div class="mb-3">
                           <label for="description" class="form-label">Описание</label>
-                          <textarea class="form-control" id="description"></textarea>
+                          <textarea class="form-control" id="description" required maxlength="1024"></textarea>
+                          <div class="invalid-feedback">
+                            Введите описание задачи (не более 1024 символов)
+                          </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button id="saveModal__save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Сохранить</button>
+                    <button id="saveModal__save" type="button" class="btn btn-primary">Сохранить</button>
                 </div>
             </div>
         </div>
