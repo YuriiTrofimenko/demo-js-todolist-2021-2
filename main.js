@@ -1,6 +1,40 @@
 import Todo from './todo.js'
 import { state, updateItem, getItemById } from './store.js'
 
+/* const loadingDiv = document.createElement('div')
+loadingDiv.id = 'loading'
+loadingDiv.style.display = 'block'
+loadingDiv.innerText = 'Loading...'
+loadingDiv.style.backgroundColor = 'yellow'
+loadingDiv.style.position = 'fixed'
+loadingDiv.style.zIndex = 999
+loadingDiv.style.top = 0
+loadingDiv.style.left = (window.innerWidth / 2) + 'px'
+document.body.append(loadingDiv) */
+
+const loadingDiv = document.getElementById('loading')
+loadingDiv.style.display = 'block'
+
+const hardAction = function (n) {
+  new Promise((resolve, reject) => {
+    if (typeof n !== 'number') {
+      reject('N is not a number')
+    }
+    function fib (n) {
+      if (n === 0 || n === 1) {
+        return 1
+      }
+      return fib(n - 2) + fib(n - 1)
+    }
+    const result = fib(n)
+    resolve(result)
+  }).then(result => console.log('fib = ', result))
+  .catch(reason => console.log('Error: ', reason))
+  .finally(() => loadingDiv.style.display = 'none')
+}
+
+hardAction(40)
+
 const addItemFab = document.getElementById('fab')
 const $saveModal =
   new bootstrap.Modal(document.getElementById('saveModal'), {})
@@ -89,8 +123,9 @@ document.addEventListener('click', ev => {
 
 function fillItems () {
     const cardsHtml = state.items.map(item => {
+      // <div data-id="${item.id}" class="card" style="width: 20rem;${item.done ? 'background-color:green' : ''}">
        return `<div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-3">
-                <div data-id="${item.id}" class="card" style="width: 20rem;${item.done ? 'background-color:green' : ''}">
+                <div data-id="${item.id}" class="card ${item.done ? 'text-success' : ''}">
                     <div class="card-body">
                     <h5 class="card-title">${item.title}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
@@ -106,6 +141,7 @@ function fillItems () {
     ).reduce((resultView, currentView) => resultView += currentView, '')
     const itemsRow = document.querySelector('#items > .row')
     itemsRow.innerHTML = cardsHtml
+    // document.querySelectorAll('.card-body > h5').forEach(title => title.style.color = 'green')
 }
 
 fillItems()
