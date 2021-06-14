@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODO List</title>
+    <title>Список задач</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <div id="loading">Loading...</div>
     <div id="details-modal" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -30,7 +29,7 @@
         </div>
     </div>
 
-    <div id="saveModal" class="modal" tabindex="-1">
+    <div id="save-modal" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -57,19 +56,42 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button id="saveModal__save" type="button" class="btn btn-primary">Сохранить</button>
+                    <button id="save-modal__save" type="button" class="btn btn-primary">Сохранить</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <h1>TODO List</h1>
+    <div id="delete-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Удаление задачи</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    Вы точно уверены, что хотите удалить эту задачу?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button id="delete-modal__delete" type="button" class="btn btn-danger">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand mb-0 h1">Список задач</a>
+        </div>
+    </nav>
+
     <div id="items" class="container">
         <div class="row">
         </div>
     </div>
 
-    <div id="fab" class="fab" data-bs-toggle="modal" data-bs-target="#saveModal">
+    <div id="fab" class="fab" data-bs-toggle="modal" data-bs-target="#save-modal">
         <i class="bi-plus"></i>
     </div>
 
