@@ -63,11 +63,13 @@ const detailsModal = function (id) {
 }
 
 const doneToggler = function (id) {
-    console.log('doneToggler call, model id = ' + id)
+  const item = getItemById(id)
+  item.done = !item.done
+
+  fillItems()
 }
 
 const saveModal = function (id) {
-    // console.log('saveModal call, model id = ' + id)
     state.selectedItemId = id
     const selectedItem = getItemById(id)
 
@@ -102,17 +104,16 @@ document.addEventListener('click', ev => {
 
 function fillItems () {
     const cardsHtml = state.items.map(item => {
-      // <div data-id="${item.id}" class="card" style="width: 20rem;${item.done ? 'background-color:green' : ''}">
        return `<div class="col-12 col-sm-6 col-md-3 m-2 card-container">
-                <div data-id="${item.id}" class="card ${item.done ? 'text-success' : ''}">
+                <div data-id="${item.id}" class="card ${item.done ? 'bg-success text-white' : ''}">
                     <div class="card-body">
                     <h5 class="card-title ellipsed-title">${item.title}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
+                    <h6 class="card-subtitle mb-2 ${item.done ? '' : 'text-muted'}">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
                     <p class="card-text ellipsed-text">${item.description}</p>
-                    <button data-id="${item.id}" data-action="details" type="button" class="btn btn-outline-secondary m-1" data-bs-toggle="modal" data-bs-target="#details-modal">Подробнее</button>
-                    <button data-id="${item.id}" data-action="edit" type="button" class="btn btn-outline-secondary m-1">Редактировать</button>
-                    <button data-id="${item.id}" data-action="toggle-done"  type="button" class="btn btn-outline-secondary m-1">Готово</button>
-                    <button data-id="${item.id}" data-action="delete" type="button" class="btn btn-outline-danger m-1">Удалить</button>
+                    <button data-id="${item.id}" data-action="details" type="button" class="btn ${item.done ? 'btn-outline-light' : 'btn-outline-secondary'} m-1" data-bs-toggle="modal" data-bs-target="#details-modal">Подробнее</button>
+                    <button data-id="${item.id}" data-action="edit" type="button" class="btn ${item.done ? 'btn-outline-light' : 'btn-outline-secondary'} m-1">Редактировать</button>
+                    <button data-id="${item.id}" data-action="toggle-done"  type="button" class="btn ${item.done ? 'btn-outline-light' : 'btn-outline-secondary'} m-1">Готово</button>
+                    <button data-id="${item.id}" data-action="delete" type="button" class="btn ${item.done ? 'btn-danger' : 'btn-outline-danger'} m-1">Удалить</button>
                     </div>
                 </div>
             </div>`
@@ -120,7 +121,6 @@ function fillItems () {
     ).reduce((resultView, currentView) => resultView += currentView, '')
     const itemsRow = document.querySelector('#items > .row')
     itemsRow.innerHTML = cardsHtml
-    // document.querySelectorAll('.card-body > h5').forEach(title => title.style.color = 'green')
 }
 
 fillItems()
