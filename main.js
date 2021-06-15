@@ -53,12 +53,12 @@ saveModalForm.addEventListener('submit', (ev) => {
 })
 
 const detailsModal = function (id) {
-    const selectedItem = getItemById(id)
-    if (selectedItem) {
+    const item = getItemById(id)
+    if (item) {
         const modalTitle = document.querySelector('#details-modal > .modal-dialog > .modal-content .modal-title')
         const modalText = document.querySelector('#details-modal > .modal-dialog > .modal-content > .modal-body')
-        modalTitle.innerText = selectedItem.title
-        modalText.innerText = selectedItem.description
+        modalTitle.innerText = item.title
+        modalText.innerText = item.description
     }
 }
 
@@ -71,13 +71,13 @@ const doneToggler = function (id) {
 
 const saveModal = function (id) {
     state.selectedItemId = id
-    const selectedItem = getItemById(id)
+    const item = getItemById(id)
 
     const saveModalFormTitle = document.querySelector('#save-modal form #title')
     const saveModalFormDescription = document.querySelector('#save-modal form #description')
-    if (selectedItem) {
-      saveModalFormTitle.value = selectedItem.title
-      saveModalFormDescription.value = selectedItem.description
+    if (item) {
+      saveModalFormTitle.value = item.title
+      saveModalFormDescription.value = item.description
       $saveModal.show()
     }
 }
