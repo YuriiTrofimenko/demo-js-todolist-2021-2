@@ -1,5 +1,5 @@
 import Todo from './todo.js'
-import { state, updateItem, getItemById } from './store.js'
+import { state, updateItem, getItemById, fetchItems } from './store.js'
 
 /* const loadingDiv = document.createElement('div')
 loadingDiv.id = 'loading'
@@ -13,10 +13,10 @@ loadingDiv.style.left = (window.innerWidth / 2) + 'px'
 document.body.append(loadingDiv) */
 
 const loadingDiv = document.getElementById('loading')
-loadingDiv.style.display = 'block'
+// loadingDiv.style.display = 'block'
 
-const hardAction = function (n) {
-  new Promise((resolve, reject) => {
+/* const hardAction = function (n) {
+  return new Promise((resolve, reject) => {
     if (typeof n !== 'number') {
       reject('N is not a number')
     }
@@ -28,12 +28,33 @@ const hardAction = function (n) {
     }
     const result = fib(n)
     resolve(result)
-  }).then(result => console.log('fib = ', result))
-  .catch(reason => console.log('Error: ', reason))
-  .finally(() => loadingDiv.style.display = 'none')
+  })// .then(result => console.log('fib = ', result))
+  // .catch(reason => console.log('Error: ', reason))
+  // .finally(() => loadingDiv.style.display = 'none')
+} */
+
+/* try {
+  const result = await hardAction(40)
+  console.log('fib = ', result)
+} catch (reason) {
+  console.log('Error: ', reason)
+} finally {
+  loadingDiv.style.display = 'none'
+} */
+
+/* async function foo () {
+  try {
+    const result = await hardAction(35)
+    // console.log('fib = ', result)
+    return result
+  } catch (reason) {
+    console.log('Error: ', reason)
+  } finally {
+    loadingDiv.style.display = 'none'
+  }
 }
 
-hardAction(40)
+console.log('fib = ', foo()) */
 
 const addItemFab = document.getElementById('fab')
 const $saveModal =
@@ -127,7 +148,7 @@ function fillItems () {
        return `<div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-3">
                 <div data-id="${item.id}" class="card ${item.done ? 'text-success' : ''}">
                     <div class="card-body">
-                    <h5 class="card-title">${item.title}</h5>
+                    <h5 class="card-title ellipsed-title">${item.title}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
                     <p class="card-text ellipsed-text">${item.description}</p>
                     <button data-id="${item.id}" data-action="details" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#details-modal">Details</button>
@@ -144,7 +165,7 @@ function fillItems () {
     // document.querySelectorAll('.card-body > h5').forEach(title => title.style.color = 'green')
 }
 
-fillItems()
+fetchItems(fillItems, loadingDiv)
 
 
 

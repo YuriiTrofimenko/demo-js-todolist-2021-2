@@ -11,6 +11,14 @@
   width: 20rem !important
 }
 
+.ellipsed-title {
+  overflow: hidden;
+  /* height: 25px; */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical
+}
+
 .ellipsed-text {
   overflow: hidden;
   height: 75px;
