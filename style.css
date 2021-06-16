@@ -1,3 +1,11 @@
+.spinner-border {
+  position: fixed;
+  top: calc(50% - 64px);
+  left: calc(50% - 64px);
+  z-index: 999;
+  display: none;
+}
+
 .card-container {
   min-width: 21rem !important
 }

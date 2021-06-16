@@ -1,5 +1,5 @@
 import Todo from './todo.js'
-import { state, updateItem, getItemById, fetchItems } from './store.js'
+import { state, createItem, updateItem, getItemById, fetchItems, deleteItem } from './store.js'
 
 const addItemFab = document.getElementById('fab')
 
@@ -14,6 +14,16 @@ const formSubmitEvent = new Event('submit', {'cancelable': true})
 const saveModalSave = document.getElementById('save-modal__save')
 const deleteModalDelete = document.getElementById('delete-modal__delete')
 
+const preloader = {
+  spinner: document.querySelector('.spinner-border'),
+  show () {
+    this.spinner.style.display = 'block'
+  },
+  hide () {
+    this.spinner.style.display = 'none'
+  }
+}
+
 addItemFab.addEventListener('click', (ev) => {
   state.selectedItemId = null
   saveModalForm.classList.remove('was-validated')
@@ -24,29 +34,40 @@ saveModalSave.addEventListener('click', (ev) => {
   saveModalForm.dispatchEvent(formSubmitEvent)
 })
 deleteModalDelete.addEventListener('click', (ev) => {
-  state.items = state.items.filter(i => i.id !== state.selectedItemId) // using filter instead of splice because id isn't an order id (splice requires order id)
-  
-  $deleteModal.hide()
-  fillItems()
+  deleteItem(state.selectedItemId, preloader).then(
+    result => {
+      $deleteModal.hide()
+      if (result) {
+        fillItems()
+      }
+    }
+  )
 })
 
-saveModalForm.addEventListener('submit', (ev) => {
+saveModalForm.addEventListener('submit', async (ev) => {
   ev.preventDefault()
   if (saveModalForm.checkValidity()) {
     const saveModalFormTitle = document.querySelector('#save-modal form #title')
     const saveModalFormDescription = document.querySelector('#save-modal form #description')
+    let result
     if (!state.selectedItemId) {
-      state.items.unshift(new Todo(saveModalFormTitle.value, saveModalFormDescription.value, new Date()))
+      result = await createItem(
+        new Todo(saveModalFormTitle.value, saveModalFormDescription.value, new Date()),
+        preloader
+      )
     } else {
       updateItem({
         'title': saveModalFormTitle.value,
         'description': saveModalFormDescription.value
       })
+      result = true
     }
     saveModalForm.classList.remove('was-validated')
     saveModalForm.reset()
     $saveModal.hide()
-    fillItems()
+    if (result) {
+      fillItems()
+    }
   } else {
     saveModalForm.classList.add('was-validated')
   }
@@ -123,7 +144,7 @@ function fillItems () {
     itemsRow.innerHTML = cardsHtml
 }
 
-fetchItems(fillItems, loadingDiv)
+fetchItems(fillItems, preloader)
 
 
 
