@@ -1,14 +1,5 @@
-#loading {
-  display: block;
-  background-color: yellow;
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 50vw
-}
-
-.card {
-  width: 20rem !important
+.card-container {
+  min-width: 21rem !important
 }
 
 .ellipsed-title {
@@ -24,6 +15,13 @@
   height: 75px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical
+}
+
+.ellipsed-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical
 }
 
