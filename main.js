@@ -28,10 +28,19 @@ const preloader = {
   }
 }
 
+function clearForm(form, modal) {
+  form.classList.remove('was-validated')
+  form.reset()
+  document.getElementById('todo-item-date-output').attributes.removeNamedItem('data-date')
+
+  if (modal) {
+    modal.hide() 
+  }
+}
+
 addItemFab.addEventListener('click', (ev) => {
   state.selectedItemId = null
-  saveModalForm.classList.remove('was-validated')
-  saveModalForm.reset()
+  clearForm(saveModalForm)
 })
 
 saveModalSave.addEventListener('click', (ev) => {
@@ -69,9 +78,7 @@ saveModalForm.addEventListener('submit', async (ev) => {
       })
       result = true
     }
-    saveModalForm.classList.remove('was-validated')
-    saveModalForm.reset()
-    $saveModal.hide()
+    clearForm(saveModalForm, $saveModal)
     if (result) {
       fillItems()
     }
@@ -118,8 +125,7 @@ const doneToggler = function (id) {
 const saveModal = function (id) {
     state.selectedItemId = id
     const item = getItemById(id)
-
-    console.log('item', item)
+    
     if (item) {
       const saveModalFormTitle = document.querySelector('#save-modal form #title')
       const saveModalFormDescription = document.querySelector('#save-modal form #description')
@@ -175,12 +181,3 @@ function fillItems () {
 }
 
 fetchItems(fillItems, preloader)
-
-
-
-
-
-
-
-
-
