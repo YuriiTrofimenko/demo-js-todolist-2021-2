@@ -1,3 +1,4 @@
+import moment from './node_modules/moment/dist/moment.js'
 import Todo from './todo.js'
 import { state, createItem, updateItem, getItemById, fetchItems, deleteItem } from './store.js'
 
@@ -13,6 +14,9 @@ const formSubmitEvent = new Event('submit', {'cancelable': true})
 
 const saveModalSave = document.getElementById('save-modal__save')
 const deleteModalDelete = document.getElementById('delete-modal__delete')
+
+const todoItemFormDateInput = document.getElementById('date')
+const todoItemFormDateOutput = document.getElementById('todo-item-date-output')
 
 const preloader = {
   spinner: document.querySelector('.spinner-border'),
@@ -49,16 +53,19 @@ saveModalForm.addEventListener('submit', async (ev) => {
   if (saveModalForm.checkValidity()) {
     const saveModalFormTitle = document.querySelector('#save-modal form #title')
     const saveModalFormDescription = document.querySelector('#save-modal form #description')
+    const saveModalFormDate = document.querySelector('#save-modal form #date')
     let result
     if (!state.selectedItemId) {
+      console.log(saveModalFormDate.value, typeof saveModalFormDate.value)
       result = await createItem(
-        new Todo(saveModalFormTitle.value, saveModalFormDescription.value, new Date()),
+        new Todo(saveModalFormTitle.value, saveModalFormDescription.value, new Date(saveModalFormDate.value)),
         preloader
       )
     } else {
       updateItem({
         'title': saveModalFormTitle.value,
-        'description': saveModalFormDescription.value
+        'description': saveModalFormDescription.value,
+        'date': new Date(saveModalFormDate.value)
       })
       result = true
     }
@@ -71,6 +78,24 @@ saveModalForm.addEventListener('submit', async (ev) => {
   } else {
     saveModalForm.classList.add('was-validated')
   }
+})
+
+let shouldDateInputChangeEmitting = true
+todoItemFormDateInput.addEventListener('change', (ev) => {
+  if (shouldDateInputChangeEmitting) {
+    state.form.dateInput = ev.target.value
+    todoItemFormDateOutput.dataset.date =
+      moment(state.form.dateInput, "YYYY-MM-DD").format(todoItemFormDateInput.dataset.dateFormat)
+    const formDateInputChangeEvent = new Event('change', {'cancelable': true})
+    shouldDateInputChangeEmitting = false
+    console.log(todoItemFormDateInput.dispatchEvent(formDateInputChangeEvent))
+  } else {
+    shouldDateInputChangeEmitting = true 
+  }
+})
+todoItemFormDateOutput.addEventListener('click', (ev) => {
+  const formDateInputClickEvent = new Event('click', {'cancelable': true})
+  console.log(todoItemFormDateInput.dispatchEvent(formDateInputClickEvent))
 })
 
 const detailsModal = function (id) {
@@ -94,11 +119,16 @@ const saveModal = function (id) {
     state.selectedItemId = id
     const item = getItemById(id)
 
-    const saveModalFormTitle = document.querySelector('#save-modal form #title')
-    const saveModalFormDescription = document.querySelector('#save-modal form #description')
+    console.log('item', item)
     if (item) {
+      const saveModalFormTitle = document.querySelector('#save-modal form #title')
+      const saveModalFormDescription = document.querySelector('#save-modal form #description')
+      const saveModalFormDate = document.querySelector('#save-modal form #date')
       saveModalFormTitle.value = item.title
       saveModalFormDescription.value = item.description
+      saveModalFormDate.valueAsDate = new Date(item.date)
+      todoItemFormDateOutput.dataset.date =
+        moment(item.date, "YYYY-MM-DD").format(todoItemFormDateInput.dataset.dateFormat)
       $saveModal.show()
     }
 }
@@ -129,7 +159,7 @@ function fillItems () {
                 <div data-id="${item.id}" class="card ${item.done ? 'bg-success text-white' : ''}">
                     <div class="card-body">
                     <h5 class="card-title ellipsed-title">${item.title}</h5>
-                    <h6 class="card-subtitle mb-2 ${item.done ? '' : 'text-muted'}">${item.date.toLocaleString('ru').slice(0, 10)}</h6>
+                    <h6 class="card-subtitle mb-2 ${item.done ? '' : 'text-muted'}">${moment(item.date).format("DD.MM.YYYY")/* item.date.toLocaleString('ru').slice(0, 10) */}</h6>
                     <p class="card-text ellipsed-text">${item.description}</p>
                     <button data-id="${item.id}" data-action="details" type="button" class="btn ${item.done ? 'btn-outline-light' : 'btn-outline-secondary'} m-1" data-bs-toggle="modal" data-bs-target="#details-modal">Подробнее</button>
                     <button data-id="${item.id}" data-action="edit" type="button" class="btn ${item.done ? 'btn-outline-light' : 'btn-outline-secondary'} m-1">Редактировать</button>

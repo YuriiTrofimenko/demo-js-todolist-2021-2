@@ -33,6 +33,56 @@
   -webkit-box-orient: vertical
 }
 
+#date {
+  position: relative;
+  width: 150px; height: 30px;
+  color: white;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
+#date::selection, #date::-moz-selection {
+  background-color: white;
+}
+
+/* #todo-item-date:before {
+  position: absolute;
+  top: 3px; left: 3px;
+  content: attr(data-date);
+  display: inline-block;
+  color: black;
+} */
+
+#date::-webkit-datetime-edit, input::-webkit-inner-spin-button, input::-webkit-clear-button {
+  display: none;
+}
+
+#date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  color: black;
+  opacity: 1;    
+}
+
+#todo-item-date-output {
+  background-color: #fff;
+  width: 120px;
+  height: 23px;
+  margin-top: 5px;
+  margin-left: 5px;
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none
+}
+
+#todo-item-date-output::before {
+  content: attr(data-date);
+}
+
 .fab {
   width: 64px;
   height: 64px;

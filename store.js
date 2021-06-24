@@ -9,6 +9,9 @@ const state = {
         new Todo('Todo title 4', '4Some quick example text to build on the card title and make up the bulk of the card\'s content. Some quick example text to build on the card title and make up the bulk of the card\'s content.', new Date('2021-07-01')),
         new Todo('Todo title 5', '5Some quick example text to build on the card title and make up the bulk of the card\'s content.', new Date('2021-06-20')) */
     ],
+    form: {
+      dateInput: null
+    },
     selectedItemId: null
 }
 
@@ -36,7 +39,7 @@ async function fetchItems (fillItems, preloader) {
       new Todo(item.title, 'No Content', new Date(), item.completed),
     )) */
     items.forEach(item => state.items.unshift(
-      new Todo(decodeURIComponent(item.title), decodeURIComponent(item.description), new Date(), item.done, item.id),
+      new Todo(decodeURIComponent(item.title), decodeURIComponent(item.description), item.date, item.done, item.id),
     ))
   fillItems()
   } catch (error) {
